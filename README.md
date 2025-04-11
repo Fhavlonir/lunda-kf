@@ -2,7 +2,7 @@
 
 ![](agreement.svg)
 
-Diagrammet visar hur ofta partierna röstar lika med varandra.
+Diagrammet visar hur ofta partierna röstade lika med varandra under perioden 2022-10-25 - 2025-03-27.
 Detta bortser från omröstningar då endera parti avstod att rösta.
 
 Egentligen röstar ju ledamöterna, och inte partierna, men antagandet att alla inom ett parti röstar samma tycks befogat, så partiets röst är den representant med lägst stolsnummer om det någonsin vore tvetydigt.
