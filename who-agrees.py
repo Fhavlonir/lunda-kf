@@ -22,8 +22,6 @@ pairings.sort_values(inplace=True, ascending=False)
 pairings.to_csv("pairings.csv")
 print(pairings)
 print(pairings2d)
-plt.tight_layout()
-plt.title = "Hur ofta röstar Lundapartierna lika?"
 ax = sns.heatmap(
     pairings2d.sort_values("M").T.sort_values("M").fillna(100),
     annot=True,
@@ -32,4 +30,6 @@ ax = sns.heatmap(
     cmap="viridis",
     square=True,
 )
-plt.savefig("agreement.svg")
+plt.tight_layout()
+plt.title = "Hur ofta röstar Lundapartierna lika?"
+plt.savefig("agreement.svg", transparent=True)
