@@ -3,11 +3,11 @@
 ![](agreement.svg)
 
 Diagrammet visar hur ofta partierna röstar lika med varandra.
-Detta bortser från omröstningar då endera parti avstod att rösta, och tar bara med de omröstningar då båda partierna lagt en röst.
+Detta bortser från omröstningar då endera parti avstod att rösta.
 
-Egentligen röstar ju ledamöterna, och inte partierna, men antagandet att alla inom ett parti röstar samma tycks befogat, så partiet röst är den representant med lägst stolsnummer om det någonsin vore otydligt.
+Egentligen röstar ju ledamöterna, och inte partierna, men antagandet att alla inom ett parti röstar samma tycks befogat, så partiets röst är den representant med lägst stolsnummer om det någonsin vore tvetydigt.
 
-Datan är tagen från protokollen i PDF-format. Det verkar fungera helt okej, men det är möjligt att något inte funkar.
+Datan är tagen från protokollen i PDF-format. Det verkar fungera helt okej, men det är möjligt att jag missat någon bugg.
 
 Denna kod är avsedd att köras på Unix-iga operativsystem (Linux, MacOS). Jag har ingen aning om huruvida den fungerar på t.ex. Windows.
 
