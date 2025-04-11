@@ -1,0 +1,6 @@
+flake.nix
+flake.lock
+data
+protokoll
+pairings.csv
+summary.csv
