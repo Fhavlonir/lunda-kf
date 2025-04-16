@@ -20,7 +20,7 @@ Till att börja med låter vi PdfReader från PyPDF2 läsa in PDF-filerna och g�
         alltext += t
 ```
 
-Eftersom PyPDF2-biblioteket inte egentligen är gjort för svensk text, gör den ibland lite konstiga misstag, så de rättar vi till manuellt. Sen lägger vi till allt resultat i en enda lång textsträng, eftersom tabeller inte sällan börjar på en sida och fortsätter på nästa. Dessutom ersätter den radbryt med blanksteg, eftersom t.ex. långa namn gör att en tabellrad delas upp på två textrader, så den lättaste lösningen på det är att helt enkelt låta hela texten vara på en och samma textrad.
+Eftersom PyPDF2-biblioteket inte egentligen är gjort för svensk text, gör den ibland lite konstiga misstag, så de rättade vi till manuellt. Sen lägger vi till alla pdf-sidor i en enda lång textsträng, eftersom tabeller inte sällan börjar på en sida och fortsätter på nästa. Dessutom ersätta vi radbryt med blanksteg, långa namn gör att en tabellrad delas upp på två textrader, och den lättaste lösningen på det är att helt enkelt låta hela texten vara på en och samma textrad.
 
 ```python extract_protocols.py
     rows = re.compile(
@@ -32,7 +32,7 @@ Eftersom PyPDF2-biblioteket inte egentligen är gjort för svensk text, gör den
     )
 ```
 
-Här har vi den läskigaste delen av hela programmet: De reguljära uttrycken. Kort sagt är de ett sätt att försöka känna igen mönster i text, för att först identifiera rader av en tabell, och sedan identifiera värdena per rad man fått fram. Att förklara allt om regex-formattering är långt utanför den här postens avsikt, men så intresserade läsare hänvisas till: [Wikipedia](https://sv.wikipedia.org/wiki/Regulj%C3%A4ra_uttryck), [högskolekurser, förslagsvis på LTH](https://kurser.lth.se/lot/course/EDAN65), och [regexr.com](https://regexr.com/) som automatiskt förklarar och testar regex-uttryck.
+Här ovan har vi den läskigaste delen av hela programmet: De reguljära uttrycken. Kort sagt är de ett sätt att försöka känna igen mönster i text, för att först identifiera rader av en tabell, och sedan identifiera värdena per rad man fått fram. Att förklara allt om regex-formattering är långt utanför den här postens avsikt, men så intresserade läsare hänvisas till: [Wikipedia](https://sv.wikipedia.org/wiki/Regulj%C3%A4ra_uttryck), [högskolekurser, förslagsvis på LTH](https://kurser.lth.se/lot/course/EDAN65), och [regexr.com](https://regexr.com/) som automatiskt förklarar och testar regex-uttryck.
 
 För att förklara just dessa i ord, så letar de efter teckensekvenser på formen:
 - 1-2 siffror (stolsnummer)
@@ -42,6 +42,7 @@ För att förklara just dessa i ord, så letar de efter teckensekvenser på form
 - Eventuellt de två förra grejerna igen. Om en ersättare har hoppat in finns nämligen ordinarie namgiven precis efter.
 - En kombination av bokstäver och mellanrum (partinamnet)
 - Texten ("Ja", "Nej" eller "Avstår")
+
 Den exakta formuleringen på dessa uttryck fick jag mer eller mindre testa mig fram till, till en början tyckte den till exempel att rader från innehållsförteckning, m.m. t.ex. "[§ ]66 Motion från Börje Hed (FNL) och Ja[n Annerstedt]" passade in på beskrivningen. Vilket de ju i och för sig gjorde, även om det inte var det jag hade tänkt.
 
 ```python extract_protocols.py
@@ -91,13 +92,13 @@ Vår tidigare nämnda exempelomröstning blir alltså:
 |------------|--|---|--|---|--|---|--|--|---|
 |2023-06-21_2|Ja|Ja |Ja|Nej|Ja|Nej|Ja|Ja|Nej|
 
-Men vänta lite, om man kollar upp den omröstningen i protokollet fanns det ju en del oenighet inom Liberalerna, det var ju framför allt KF:s 2:a vice ordförande Camilla Neptune som hade en stark åsikt, men Philip Sandberg, lundaliberalernas superstar #1 avstod omrösntningen. Därför lägger vi också till en rad som skipper de tre första namnen i listan, (d.v.s. fullmäktiges ordförande och de två vice). Då får vi:
+Men vänta lite, om man kollar upp den omröstningen i protokollet fanns det ju en del oenighet inom Liberalerna, det var ju framför allt KF:s 2:a vice ordförande Camilla Neptune som hade en stark åsikt, men Philip Sandberg, lundaliberalernas superstar #1 avstod omröstningen. Därför lägger vi också till en rad i koden som skippar de tre första namnen i listan, (d.v.s. fullmäktiges ordförande och de två vice). Då får vi istället listettornas röster. Alltså:
 
 |omröstning  |C |FNL|KD|L     |M |MP |S |SD|V  |
 |------------|--|---|--|------|--|---|--|--|---|
 |2023-06-21_2|Ja|Ja |Ja|Avstår|Ja|Nej|Ja|Ja|Nej|
 
-Detta exempel upprepas för samtliga omröstningar, och det samlas i ett kalkylark som hteter "summary.csv".
+Detta exempel upprepas för samtliga omröstningar, och det samlas i ett kalkylark som heter "summary.csv".
 
 Vid detta laget kan vi lika gärna kunna använda ett kalkylarksprogram, men jag är mer av en kod-person oavsett, så det sista lilla steget för att göra ett fint diagram:
 
