@@ -5,31 +5,26 @@ import seaborn as sns
 
 df = pd.read_csv("summary.csv", na_values="Avstår")
 
-pairings = pd.Series()
-manual_name_list = ["M", "S", "KD", "V", "SD", "C", "L", "FNL", "MP"]
-pairings2d = pd.DataFrame(columns=df.columns[1:], index=df.columns[1:])
-
+pairings = pd.DataFrame(columns=df.columns[1:], index=df.columns[1:])
 
 for p in itertools.permutations(df.columns[1:], 2):
     votes = df[list(p)].dropna()
-    plist = list(p)
-    plist.sort()
     agreement = 100 * sum(votes[p[0]] == votes[p[1]]) / len(votes)
-    pairings2d[p[0]][p[1]] = agreement
-    pairings[plist[0] + "/" + plist[1]] = agreement
+    pairings.loc[p[0], p[1]] = agreement
 
-pairings.sort_values(inplace=True, ascending=False)
-pairings.to_csv("pairings.csv")
-print(pairings)
-print(pairings2d)
+pairings.fillna(100, inplace=True)
+
+ordning: list[str] = list(
+    pd.Series(pairings["M"] - pairings["L"]).dropna().sort_values().index
+)
+
+pairings.loc[ordning, ordning].to_csv("lundapolitik-tabell.csv")
 ax = sns.heatmap(
-    pairings2d.sort_values("M").T.sort_values("M").fillna(100),
+    pairings.loc[ordning, ordning],
     annot=True,
     fmt=".1f",
     cbar=False,
     cmap="viridis",
-    square=True,
 )
 plt.tight_layout()
-plt.title = "Hur ofta röstar Lundapartierna lika?"
 plt.savefig("agreement.svg", transparent=True)

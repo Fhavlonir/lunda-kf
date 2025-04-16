@@ -31,18 +31,16 @@ for filename in os.listdir("protokoll"):
         )
         alltext += t
 
-    # print(alltext)
-    alltext = re.compile(
-        r"\d+\s+(?:\s*(?:[\w-]+\s+){1,4}\(\w+\)\s*){1,2}\s+\w+\s*\w*\s+(?:Ja|Nej|Avstår) "
+    rows = re.compile(
+        r"\d{1,2}\s+(?:\s*(?:[\w-]+\s+){1,4}\(\w+\)\s*){1,2}\s+(?:\w+\s+)+(?:Ja|Nej|Avstår) "
     ).findall(alltext, re.MULTILINE)
 
     pattern = re.compile(
-        r"^(\d+)\s+([\w\s-]+)\s+\(([A-Z]+)\)\s+(?:[\w\s-]+\(\w+\))?\s+(\w+\s*\w*)\s+(Ja|Nej|Avstår)"
+        r"^(\d{1,2})\s+([\w\s-]+)\s+\(([A-Z]+)\)\s+(?:[\w\s-]+\(\w+\))?\s+(\w+\s+)+(Ja|Nej|Avstår)"
     )
     data = []
-    for line in alltext:
-        # print(line)
-        match = pattern.match(str(line))
+    for row in rows:
+        match = pattern.match(str(row))
         if match:
             nr, namn, parti_kort, parti_lang, rost = match.groups()
             data.append(
@@ -51,4 +49,5 @@ for filename in os.listdir("protokoll"):
 
     df = pd.DataFrame(data)
     df.to_csv(str("data/" + filename[:-4] + ".csv"), index=False)
+    print(filename)
     print(df)

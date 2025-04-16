@@ -18,3 +18,5 @@ Denna kod är avsedd att köras på Unix-iga operativsystem (Linux, MacOS). Jag 
 5. Kontrollera innehållet i `/data`, det borde stämma överens med protkollen.
 6. `python summarize.py`
 7. `python who-agrees.py`
+
+Den intresserade kan även läsa [en stegvis förklaring av vad koden gör.](./stepwise.md)

@@ -13,6 +13,7 @@ for filename in os.listdir("data"):
             new_df["session"] = ""
         new_df["vote"] = (new_df["stol"] == 1).cumsum()
         new_df["omröstning"] = new_df["session"] + "_" + new_df["vote"].astype(str)
+        # new_df = new_df[new_df["stol"] > 3]
         dataframes += [new_df]
     except:
         print(
