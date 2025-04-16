@@ -2,13 +2,9 @@
 
 ![](https://imgs.xkcd.com/comics/regular_expressions.png)
 
-```python extract_protocols.py
-for filename in os.listdir("protokoll"):
-    reader = PdfReader("protokoll/" + filename)
-```
 Jag har redigerat koden lite grann, tagit bort import-rader och felhantering, som inte är del av den egenltiga lösningen.
 
-Sedan låter vi PdfReader från PyPDF2 läsa in PDF-filerna och göra sitt bästa för att översätta till vanliga textrader.
+Till att börja med låter vi PdfReader från PyPDF2 läsa in PDF-filerna och göra sitt bästa för att översätta till vanliga textrader.
 
 ```python extract_protocols.py
     alltext = ""
